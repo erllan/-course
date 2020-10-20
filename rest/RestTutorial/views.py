@@ -27,4 +27,4 @@ class DetailCourse(APIView):
     def delete(self, request, pk):
         course = Course.objects.get(pk=pk)
         course.delete()
-        return Response('удалено')
+        return Response('deleted')
