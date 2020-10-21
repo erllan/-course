@@ -1,10 +1,98 @@
-from .models import Course
-from .serializers import CourseSerializer
+from .models import *
+from .serializers import ContactSerializer, CategorySerializer, BranchSerializer, CourseSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
+class BranchList(APIView):
+    """Class for Branch"""
+
+    def get(self, request):
+        branch = Branch.objects.all()
+        serializer = ContactSerializer(branch, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        branch = ContactSerializer(data=request.data)
+        if branch.is_valid():
+            branch.save()
+        return Response(request.data)
+
+
+class BranchDetail(APIView):
+    """Class for Branch"""
+
+    def get(self, request, pk):
+        branch = Branch.objects.get(pk=pk)
+        serializer = CategorySerializer(branch)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        branch = Branch.objects.get(pk=pk)
+        branch.delete()
+        return Response('deleted')
+
+
+class ContactList(APIView):
+    """Class for Contact"""
+
+    def get(self, request):
+        contact = Contact.objects.all()
+        serializer = ContactSerializer(contact, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        contact = ContactSerializer(data=request.data)
+        if contact.is_valid():
+            contact.save()
+        return Response(request.data)
+
+
+class ContactDetail(APIView):
+    """Class for Contact"""
+
+    def get(self, request, pk):
+        contact = Contact.objects.get(pk=pk)
+        serializer = ContactSerializer(contact)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        contact = Contact.objects.get(pk=pk)
+        contact.delete()
+        return Response('deleted')
+
+
+class CategoryList(APIView):
+    """Class for Category"""
+
+    def get(self, request):
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        category = CategorySerializer(data=request.data)
+        if category.is_valid():
+            category.save()
+        return Response(request.data)
+
+
+class CategoryDetail(APIView):
+    """Class for Category"""
+
+    def get(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        category.delete()
+        return Response('deleted')
+
+
 class CourseList(APIView):
+    """Class for Course"""
 
     def get(self, request):
         course = Course.objects.all()
@@ -15,10 +103,12 @@ class CourseList(APIView):
         createCourse = CourseSerializer(data=request.data)
         if createCourse.is_valid():
             createCourse.save()
-        return Response(request.data)
+        return Response(createCourse.data)
 
 
 class DetailCourse(APIView):
+    """Class for Course"""
+
     def get(self, request, pk):
         course = Course.objects.get(pk=pk)
         serializer = CourseSerializer(course)
