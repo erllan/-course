@@ -7,16 +7,18 @@ from rest_framework.response import Response
 class BranchList(APIView):
     """Class for Branch"""
 
-    def get(self, request):
+    def get(self, request,format=None):
         branch = Branch.objects.all()
-        serializer = ContactSerializer(branch, many=True)
+        serializer = BranchSerializer(branch, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        branch = ContactSerializer(data=request.data)
+        branch = BranchSerializer(data=request.data)
         if branch.is_valid():
             branch.save()
-        return Response(request.data)
+            return Response('создано')
+        else:
+            return Response('ошибка')
 
 
 class BranchDetail(APIView):
@@ -24,7 +26,7 @@ class BranchDetail(APIView):
 
     def get(self, request, pk):
         branch = Branch.objects.get(pk=pk)
-        serializer = CategorySerializer(branch)
+        serializer = BranchSerializer(branch)
         return Response(serializer.data)
 
     def delete(self, request, pk):
@@ -74,7 +76,9 @@ class CategoryList(APIView):
         category = CategorySerializer(data=request.data)
         if category.is_valid():
             category.save()
-        return Response(request.data)
+            return Response('создано')
+        else:
+            return Response('ошибка')
 
 
 class CategoryDetail(APIView):
@@ -103,7 +107,9 @@ class CourseList(APIView):
         createCourse = CourseSerializer(data=request.data)
         if createCourse.is_valid():
             createCourse.save()
-        return Response(createCourse.data)
+            return Response('coздано')
+        else:
+            return Response("ошибка")
 
 
 class DetailCourse(APIView):

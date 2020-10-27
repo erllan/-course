@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import *
+from .models import Category, Course, Contact, Branch
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class BranchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branch
-        fields = '__all__'
+        fields = ['user', "latitude", "longitude", "address", "course"]
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -27,4 +27,3 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'name', 'description', 'Category', 'logo', 'branch', 'contact']
-
